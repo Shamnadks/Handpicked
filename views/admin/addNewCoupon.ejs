@@ -1,0 +1,28 @@
+
+<%- include('../layouts/admin/adminheader.ejs') %>
+
+<div class="col-sm-12 col-xl-6">
+  <div class="bg-light rounded h-100 p-4">
+    <form action="" method="post">
+
+      <h6 class="mb-4">ADD NEW COUPON</h6>
+      <div class="form-floating mb-3">
+          <input  name="code" type="text" class="form-control" placeholder="enter the code">
+          <label for="floatingInput">COUPON CODE</label>
+      </div><br>
+      <div class="form-floating mb-3">
+          <input  name="date" type="date" class="form-control" placeholder="choose the expiry date">
+          <label for="floatingPassword"> EXPIRY DATE</label>
+      </div><br>
+      <div class="form-floating mb-3">
+        <input  name="percent" type="text" class="form-control" placeholder="enter the OFFER">
+        <label for="floatingInput">OFFER PERCENTAGE</label>
+    </div><br>
+   
+    <button type="submit" class="btn btn-primary">ADD COUPON</button>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/coupon">BACK</a>
+     </form>
+  </div>
+</div>
+<%- include('../layouts/admin/adminfooter.ejs') %>

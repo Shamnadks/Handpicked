@@ -1,0 +1,54 @@
+<%- include('../layouts/admin/adminheader.ejs') -%>
+
+ <!-- Table Start -->
+            
+ <div class="col-12">
+  <div class="bg-light rounded h-100 p-4">
+      <h6 class="mb-4">COUPONS</h6>
+      <div class="table-responsive">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Coupon Code</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Offer</th>
+                       <th scope="col">Status</th>
+                      
+                  </tr>
+              </thead>
+              <tbody>
+                <%if(coupons.length>0)  {%>
+                  <%for(let i=0;i <coupons.length; i++){%>
+                  <tr>
+                    <td><%= [i+1] %></td>
+                      <td><%= coupons[i].code %></td>
+                      <td><%= coupons[i].date %></td>
+                      <td><%= coupons[i].offer %></td>
+                      <td><%= coupons[i].status %></td>
+                     </tr>
+                  <% } %>
+  
+                  <%}else{%>
+                      <tr>
+                          <td colspan="5">NO NEW COUPON ADDED</td>
+      
+                      </tr>
+                     <% } %>
+                  
+              </tbody>
+          </table>
+
+          <a href="/addCoupon"><button type="submit" class="btn btn-primary">ADD COUPON</button></a>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- Table End -->
+
+
+
+
+
+<%- include('../layouts/admin/adminfooter.ejs') -%>

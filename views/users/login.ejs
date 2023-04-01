@@ -1,0 +1,69 @@
+
+
+<%- include('../layouts/user/userheader.ejs') -%>
+
+<body class="goto-here">
+  <% if(typeof userData !== "undefined"){ %>
+    <%-include('login_nav') %>
+  <%}else{%>
+    <%- include('not_logged_nav') %>
+  <%}%>
+
+
+<section class="ftco-section contact-section bg-light">
+  <div class="container">
+    
+    <div class="row block-9">
+      <div class="col-md-6 order-md-last d-flex">
+        <form action="/login" method="post" class="bg-white p-5 contact-form">
+          <div class="form-group">
+
+            <h2  class="mb-2" style="color: green;"> LOGIN HERE</h2>
+            <br><br>
+            <input type="text" name="email" class="form-control" placeholder="Enter email" required>
+          </div>
+          <br>
+          <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+          </div>
+        
+          <div class="form-group">
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Sign In" class="btn btn-primary py-3 px-5"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="/forget">Forget Password</a>
+          </div>
+         
+
+          
+          <% if(typeof message !=='undefined'){ %>
+            <p style="color: green"><%= message %></p>
+            
+            <% } %>
+        </form>
+        
+
+       
+      </div>
+
+      <div class="col-md-6 d-flex">
+        
+<div class="hero-wrap hero-bread" style="background-image: url('images/loginpic.jpg');">
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-center justify-content-center">
+      <div class="col-md-9 ftco-animate text-center">
+        <P></P>
+        
+        <h3 class="mb-2" style="color: green;"> NEW USER? SIGN UP HERE</h3>
+	         <br><br><br>     
+	      <p><a href="/register" class="btn btn-primary py-3 px-5">SIGN UP</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../layouts/user/userfooter.ejs') -%>

@@ -1,0 +1,32 @@
+<%- include('../layouts/admin/adminheader.ejs') -%>
+
+  <!-- Blank Start -->
+  <div class="container-fluid pt-4 px-4">
+    <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
+        <div class="col-md-6 text-center">
+          <form action="/categoryedit" method="post">
+            <div class="form-outline mb-4">
+                <input type="hidden" name="id" value="<%= category._id %>">
+              <input type="category" name="category" value="<%= category.category %>" id="category" class="form-control form-control-lg border-dark"
+                placeholder="Edit category" />
+               
+            
+
+            <button type="submit" class="btn btn-primary w-100 btn-lg btn-block  border-dark">Edit category name</button>
+               
+    <% if(typeof message !== 'undefined'){  %>
+                            
+      <h5 class="text-danger text-center "><%= message %> </h5>
+  
+      <%
+  }
+  
+  %>
+          </form>
+        </div>
+    </div>
+</div>
+<!-- Blank End -->
+
+
+<%- include('../layouts/admin/adminfooter.ejs') -%>

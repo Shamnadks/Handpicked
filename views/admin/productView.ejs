@@ -1,0 +1,37 @@
+<%- include('../layouts/admin/adminheader.ejs') -%>
+
+
+<div class="card">
+  <h5 class="card-header">Orders</h5>
+  <div class="table-responsive text-nowrap">
+      <table class="table" id="list_orderedproducts">
+          <thead>
+            <tr>
+              <th scope="col">Product name</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+             <% order.forEach(function(orderItem){ %>
+              <% orderItem.product.forEach(function(productItem){ %>
+                <tr>
+                  <td> <%= productItem.name %></td>
+                  <td> <%= productItem.quantiy %></td>
+                  <td> <%= productItem.price %></td>
+                </tr>
+              <%  }) %> 
+              <%  }) %>
+             
+           
+           
+            </tbody>
+            </table>
+            </div>
+            </div>
+            
+
+
+
+<%- include('../layouts/admin/adminfooter.ejs') -%>

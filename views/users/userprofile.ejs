@@ -1,0 +1,185 @@
+<%- include('../layouts/user/userheader.ejs') -%>
+
+
+ 
+
+    
+        
+    
+    <style>
+
+      .tyu{
+    background-image: url('images/bg_2.jpg');
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
+    box-shadow: inset 0 0 200px rgba(0,0,0,0.5);
+  }
+  
+    
+    .main{
+        max-width: 100%;
+        padding: 20px;
+        /* background-color  : ; */
+      box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+    }
+    
+    
+    .profile {
+      max-width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .clr{
+      background-color: rgb(74, 204, 80);
+    }
+    
+    .profile img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+    
+    .profile h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    
+    .profile p {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .profile ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .profile li {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    
+    .profile li strong {
+      display: inline-block;
+      width: 100px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.label {
+  font-weight: bold;
+}
+.data {
+  flex: 1;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+
+    </style>
+
+<body class="goto-here">
+  <% if(typeof userData !== "undefined"){ %>
+    <%-include('login_nav') %>
+  <%}else{%>
+    <%- include('not_logged_nav') %>
+  <%}%>
+
+    
+    <section class="tyu">
+    <div class="container main ">
+    
+
+    
+        <div class="profile w-100 h-50">
+            <div class="container">
+                <div class="row">
+                <div class="col-6">
+            <img src="images/usericon.gif" alt="Profile Picture">
+            <h2><%= userData.name %></h2>
+           
+
+            <div class="container">
+              <div class="label">Email:</div>
+              <div class="data"><%=userData.email%></div>
+              <div class="label">Phone:</div>
+              <div class="data"><%=userData.mobile%></div>
+              <!-- <div class="label">Address:</div> -->
+              <!-- <div class="data"><%=userData.address%></div> -->
+            </div>
+            
+        </div>
+       
+        <div class="col-6">
+    <br>
+    <br>
+    <br>
+            
+    <a href="/editUserProfile?id=<%=userData._id %>" class="genric-btn w-100 primary btn btn-outline-success">Edit profile</a> <br><br>
+    <a href="/myOrders" class="genric-btn w-100 primary btn btn-outline-success">My orders</a> <br><br>
+    <a href="/addaddress" class="genric-btn w-100 primary btn btn-outline-success">Manage Address</a> <br><br>
+    <a href="/forget" class="genric-btn  w-100 primary btn btn-outline-success">Reset Password</a> <br><br>
+    <h5 class="text-success"><span class="text-danger" >wallet Amount:</span>₹ <%= userData.wallet %></h5>
+
+    
+    </div>
+   </div>
+  
+    
+            
+   <div class="container">
+    <h1 class="label">ADDRESS</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>House Name</th>
+          <th>House Number</th>
+          <th>Street</th>
+          <th>City</th>
+          <th>Pincode</th>
+          <th>##</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% address.forEach(function(address) { %>
+          <tr>
+            <td><%= address.houseName %></td>
+            <td><%= address.houseNumber %></td>
+            <td><%= address.street %></td>
+            <td><%= address.city %></td>
+            <td><%= address.pincode %></td>
+            <td>
+              <a href="/editAddress?id=<%=address._id%>"><span class="material-symbols-outlined">edit_note</span></a>
+              <a  href="/deleteAddress?id=<%=address._id%>" onclick="return confirm('Are You Sure ?')"><span class="material-symbols-outlined"> delete </span></a>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  
+  </div>
+</div>
+</div>
+      </section>
+    
+    
+    <%- include('../layouts/user/userfooter.ejs') -%>

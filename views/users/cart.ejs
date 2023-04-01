@@ -1,0 +1,217 @@
+<%- include('../layouts/user/userheader.ejs') -%>
+
+
+<style>
+	.btn-rect {
+		display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+	background-color: #82ae46;
+  color: #000;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+.price {
+  margin-left: 10px; /* add margin to the left of the price p tag */
+}
+
+</style>
+ 
+<body class="goto-here">
+  <% if(typeof userData !== "undefined"){ %>
+    <%-include('login_nav') %>
+  <%}else{%>
+    <%- include('not_logged_nav') %>
+  <%}%>
+
+
+    <div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="/home">Home</a></span> <span>Cart</span></p>
+            <h1 class="mb-0 bread">My Cart</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+
+		<section class="h-100 h-custom" style="background-color: #ffffff;">
+			<div class="container py-5 h-100">
+				<div class="row d-flex justify-content-center align-items-center h-100">
+					<div class="col-12">
+						<br><br><br>
+						<div class="card card-registration card-registration-2" style="border-radius: 15px;">
+							<div class="card-body p-0">
+								<div class="row g-0">
+									<div>
+										<div class="p-5">
+		
+											<div class="d-flex justify-content-between align-items-center mb-5">
+												<h1 class="fw-bold mb-0" style="color: #82ae46;">Shopping Cart</h1>
+												<h6 class="mb-0 text-muted"><%= length %> items</h6>
+											</div>
+											<hr class="my-4">
+											<% if (length) { %>
+											<% cartProducts.forEach(function(product) { %>
+											<form action="/checkout" method="post">
+												<div class="row mb-4 d-flex justify-content-between align-items-center ">
+													<div class="col-md-2 col-lg-2 col-xl-2">
+														<img src="/images/<%= product.images[0] %>" class="img-fluid rounded-3" style="width: auto;height: auto; border-radius: 1.2rem;" >
+													</div>
+													<div class="col-md-3 col-lg-3 col-xl-3">
+														<!-- <h6 class="text-muted"><%= product.category %> </h6>  -->
+														<h6 class="text-black mb-0"><%= product.productName %> </h6>
+													</div>
+		
+													<div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+														<!-- Minus button  -->
+														<a class="btn btn-rect " style="color: white; text-size-adjust: 20px;"
+															onclick="this.parentNode.querySelector('input[type=number]').stepDown();validateData('<%= product._id %>')">
+															-</a>
+		
+														<div class="form-outline">
+															<input style="width: 5rem;  text-align: center;" class="form-control" type="number" id="<%= product._id %>" min="1"
+																name="quantity" pattern="<%= product._id %>" max="<%= product.stock %>" value="1"
+																onchange="validateData('<%=product._id %>')" readonly  />
+															<span id="price_text_<%= product._id %>" hidden=""><%= product.price %> </span>
+
+														</div>
+														
+														 <!-- plus button  -->
+														<a class="btn btn-rect" style="color: white;"
+															onclick="this.parentNode.querySelector('input[type=number]').stepUp();validateData('<%= product._id %>')">
+															+</a>
+														<div class="form-outline">
+															<div class="fs-lg text-accent pt-2 price">
+																<div id="get">
+																	<p id="actual_price_<%= product._id %>" hidden=""><%= product.price %></p>
+																</div>
+															</div>
+														</div>
+													</div>
+												
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<h6 class="mb-0"><%= product.price %></h6>
+													 <div class=" text-end product-remove">
+														<button style="border: none;"  onclick="removeCartProduct('<%= product._id %>')"> <a href="/removeproduct/:id?id=<%= product._id %>" class="text-muted">
+															<i class="material-icons" style="font-size:26px;color:rgb(133, 121, 121)">delete</i></a></button>
+														
+													</div>
+												
+												
+											</div>
+											<%})%>
+											<%}else{%>
+
+								<img src="smiley.gif" alt="" style="width: 10vw; height: 10vh;"> <span>Missing Cart items?</span>
+								<%}%>
+								<hr class="my-4">
+	</div>
+					</div>
+			     	</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Items</th>
+      <th>Subtotal</th>
+      <th>Shipping</th>
+      <th>Total Price</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= length %></td>
+      <td id="subtotal"><%= subtotal %></td>
+      <td>-</td>
+      <td id="sub"><%= subtotal %></td>
+		</tr>
+		   
+  </tbody>
+</table>
+
+        <% if (!subtotal) { %>
+          <button type="button" class="btn btn-primary  btn-block disabled">
+            Checkout
+          </button>
+        <% } else { %>
+          
+            <button type="submit" class="btn btn-primary  btn-block">
+              Checkout
+            </button>
+          </form>
+        <% } %>
+      
+ 
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<%- include('../layouts/user/userfooter.ejs') -%>
+
+<script>
+	async function removeCartProduct(cartProductid) {
+		let response = await fetch('/removeproduct/' + cartProductid, {
+			method: 'DELETE', headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		let res = await response.json();
+		if (res == "success") {
+			window.location.reload()
+
+		}
+	}
+
+
+
+	function validateData(id, index) {
+		const element = document.getElementById(id)
+		const priceText = document.getElementById('price_text_' + id)
+		const price = document.getElementById('actual_price_' + id)
+		const subtotal = document.getElementById('subtotal')
+		const sub = document.getElementById('sub')
+		if (Number(element.value) > Number(element.max))
+			element.value = element.max
+		const rate = priceText.innerHTML
+		priceText.innerHTML = Number(price.innerHTML) * Number(element.value)
+		const diff = Number(priceText.innerHTML) - Number(rate)
+		subtotal.innerHTML = Number(diff) + Number(subtotal.innerHTML),
+			sub.innerHTML = Number(diff) + Number(sub.innerHTML)
+
+
+
+	}
+	async function proceedTocheckout() {
+		const quantity = Object.values(document.getElementsByName('quantity')).map((cartProduct) => (
+			{
+				cartProductid: cartProduct.id,
+				quantity: cartProduct.value
+			}
+		))
+
+		let response = await fetch('/checkout', {
+			method: 'post',
+			headers: { 'Content-Type': 'application/json', },
+			body: JSON.stringify(quantity)
+		});
+
+	}
+
+
+</script>

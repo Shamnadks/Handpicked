@@ -1,0 +1,65 @@
+
+
+<%- include('../layouts/user/userheader.ejs') -%>
+
+<body class="goto-here">
+  <% if(typeof userData !== "undefined"){ %>
+    <%-include('login_nav') %>
+  <%}else{%>
+    <%- include('not_logged_nav') %>
+  <%}%>
+
+
+
+  <div class="container-xl px-4 mt-4">
+    <div class="row">
+
+
+        <div class="col-md-12">
+            <h4>Order details</h4>
+            <div class="table-responsive">
+
+
+              <table id="mytable" class="table table-bordred table-striped">
+                <thead>
+                  <!-- <th><input type="checkbox" id="checkall" /></th> -->
+                  <th>OrderId</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <% order.forEach(function(orderItem) { %>
+                  <tr>
+                    <!-- <td><input type="checkbox" class="checkthis" /></td> -->
+                    <td><a href=""><%= orderItem.orderId %></a></td>
+                    <% var productNames = []; var productPrices = []; var productQuantities = []; var totalPrice = 0; var totalQuantity = 0; %>
+                    <% orderItem.product.forEach(function(productItem) { %>
+                      <% productNames.push(productItem.name); %>
+                      <% productPrices.push(productItem.price); %>
+                      <% productQuantities.push(productItem.quantity); %>
+                      <% totalPrice += productItem.price * productItem.quantity; %>
+                      <% totalQuantity += productItem.quantity; %>
+                    <% }); %>
+                    <td><%= productNames.join(', ') %></td>
+                    <td><%= orderItem.total ? orderItem.total : orderItem.subtotal %></td>
+                    <td><%= totalQuantity %></td>
+                    <td><%= orderItem.status %></td>
+                    <td><a href="/singleOrder?id=<%=orderItem.orderId%>"  class="btn btn-success">View</a></td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<%- include('../layouts/user/userfooter.ejs') -%>

@@ -1,0 +1,167 @@
+<%- include('../layouts/admin/adminheader.ejs') %>
+
+ <!-- Table Start -->
+            
+ <div class="col-12">
+  <div class="bg-light rounded h-100 p-4">
+      <h6 class="mb-4">PRODUCT TABLE</h6>
+      <div class="table-responsive">
+          <table class="table table-hover table-responsive">
+              <thead>
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Description</th>
+                       <th scope="col">Stock</th>
+                       <th scope="col">Category</th>
+                       <th scope="col">Image</th>
+                       <th scope="col">Action</th>
+
+                      
+                  </tr>
+              </thead>
+              <tbody>
+                <%if(product.length>0)  {%>
+                  <%for(let i=0;i <product.length; i++){%>
+                  <tr>
+                    <td><%= [i+1] %></td>
+                    <td><i class="fa-lg text-danger me-3"></i> <strong><%= product[i].productName %></strong></td>
+                        
+                    <td>
+                        <span class="text-muted"><%= product[i].price %></span><br>
+                        
+                    </td>
+                    <td>
+                        <span class="text-muted"><%= product[i].description %></span><br>
+                        
+                    </td>
+                    <td>
+                        <span class="text-muted"><%= product[i].stock %></span><br>
+                        
+                    
+                      <td>
+                        <span class="text-muted"><%= product[i].category %></span><br>
+                        
+                    </td> 
+    
+                    <!-- <td>
+                      <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                        <% for (let j = 0; j < product[i].images.length; j++) { %>
+                          <li
+                              data-bs-toggle="tooltip"
+                              data-popup="tooltip-custom"
+                              data-bs-placement="top"
+                              class="avatar avatar-xs pull-up"
+                          >
+                              <img src="/images/<%=product[i].images[j]%>"  width="50px"  class="rounded-circle" />
+                          </li>class="rounded-circle"
+                      <% } %>
+                      
+                      </ul>
+                      
+                      
+                    </td> -->
+
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="imageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                           Images
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="imageDropdown">
+                          <% for (let j = 0; j < product[i].images.length; j++) { %>
+                            <li>
+                              <img src="/images/<%=product[i].images[j]%>" width="50px"  />
+                            </li>
+                          <% } %>
+                        </ul>
+                      </div>
+                    </td>
+                    
+                    <td>
+                      <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="/productEdit?id=<%=product[i]._id %>"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                          <a class="dropdown-item"  onclick="Delete('<%=product[i]._id %>')" data-bs-toggle="modal" data-bs-target="#deleteBut"><i class="bx bx-trash me-1"></i> Delete</a>
+
+                        </div>
+                      </div>
+                    </td>
+                      
+                  </tr>
+                  <% } %>
+  
+                  <%}else{%>
+                      <tr>
+                          <td colspan="5">PRODUCT NOT FOUND</td>
+      
+                      </tr>
+                     <% } %>
+                  
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- Table End -->
+
+<%- include('../layouts/admin/adminfooter.ejs') %>
+<div class="modal fade" id="deleteBut" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to Delete this product?
+        <input type="hidden" id="deleteButton">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-danger mt-1 mb-1" onclick='return confirmDelete()' id="delete-Button">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <script>
+    $(document).ready( function () {
+    $('#Table').DataTable();
+} );
+  </script>
+
+<script>
+  function Delete(data) {
+    console.log("yes anju good");
+    document.getElementById('deleteButton').value = data
+  }
+  function confirmDelete() {
+    const id = document.getElementById("deleteButton").value
+    console.log(id)
+    fetch("/deleteProduct", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    })
+      .then(response => {
+        $('#deleteBut').modal('hide')
+        console.log(response)
+      })
+      .then(data => {
+        location.reload()
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+</script>

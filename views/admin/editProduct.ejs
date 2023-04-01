@@ -1,0 +1,123 @@
+<%- include('../layouts/admin/adminheader.ejs') %>
+
+<div class="col-sm-12 col-xl-6">
+  <div class="bg-light rounded h-100 p-4">
+    <form action="/productEdit?id=<%= product._id %>" method="post" enctype="multipart/form-data">
+
+      <h6 class="mb-4">EDIT THE PRODUCT</h6>
+      <div class="form-floating mb-3">
+        <input type="hidden" name="id" value="<%= product._id %>">
+
+          <input name="name" type="text" class="form-control" id="floatingInput"
+              placeholder="name" value="<%= product.productName%>">
+          <label for="floatingInput">Product Name</label>
+      </div><br>
+      <div class="form-floating mb-3">
+          <input name="price" type="number" class="form-control" id="floatingPassword"
+              placeholder="Password"  value="<%= product.price%>">
+          <label for="floatingPassword">Price</label>
+      </div><br>
+      <div class="form-floating">
+        <input name="description" class="form-control"
+            id="floatingTextarea" style="height: 150px;"  value="<%= product.description %>">
+        <label for="floatingTextarea">Description</label>
+    </div><br>
+    <div class="form-floating mb-3">
+      <input name="stock" type="number" class="form-control" id="floatingPassword"
+          placeholder="Password"  value="<%= product.stock%>">
+      <label for="floatingPassword">Stock</label>
+  </div><br>
+      <div class="form-floating mb-3">
+          <select name="category" class="form-select" id="floatingSelect"
+              aria-label="Floating label select example">
+              <option selected>Choose the category</option>
+              <%for(let i=0;i <category.length; i++){%>
+                <% if(category[i]._id.toString() === product.category.toString()) { %>
+                  <option value="<%= category[i]._id%>" selected><%=category[i].category %></option>
+                            <% } else { %>
+                <option value=<%=category[i]._id%>><%=category[i].category%></option>
+                <%}%>
+                <% } %>
+          </select>
+          </div>
+          <br> 
+      <div class="mb-3">
+        <div class="d-flex flex-wrap">
+        <%if(product.images.length>0)  {%>
+        <% for (let i = 0; i < product.images.length; i++) { %>
+          <div class="position-relative me-3 mb-3">
+        <img src="/images/<%=product.images[i]%>"  width="100px" height="auto" id="imgView">
+        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 delete-img" data-img="<%= product.images[i] %>">
+          <i class="bi bi-trash"></i>
+        </button></div>
+        <% } %>
+        <% } %>
+        <label for="formFileMultiple" class="form-label">select multiple files</label>
+        <input onchange="return validateImages();" class="form-control" type="file" id="formFileMultiple" name="image"  multiple>
+    </div></div><br>
+    
+    <% if(typeof message !== 'undefined'){  %>
+                            
+      <h5 class="text-danger text-center "><%= message %> </h5>
+  
+      <%
+  }
+  
+  %>
+    <button type="submit" class="btn btn-primary">SUBMIT</button>
+     </form>
+  </div>
+</div>
+<%- include('../layouts/admin/adminfooter.ejs') %>
+
+<script>
+  function validateImages() {
+  const input = document.getElementById("formFileMultiple");
+  const files = input.files;
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    const fileSizeLimit = 5 * 1024 * 1024; // 5 MB
+
+    if (!allowedExtensions.exec(file.name)) {
+      alert("Invalid file type. Please select only images with JPG, JPEG, PNG, or GIF extensions.");
+      input.value = ""; // Clear the file input element
+      return false;
+    }
+
+    if (file.size > fileSizeLimit) {
+      alert("File size is too large. Please select images with a maximum size of 5 MB.");
+      input.value = ""; // Clear the file input element
+      return false;
+    }
+  }
+
+  return true;
+}
+var formFileMultipleput = document.getElementById("formFileMultiple");
+formFileMultiple.addEventListener("change", function() {
+  document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0]);
+
+})
+
+
+//for deleting each image
+
+
+  const deleteButtons = document.querySelectorAll('.delete-img');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', async function() {
+      const imgName = this.dataset.img;
+      const res = await fetch(`/deleteImage/${imgName}`, { method: 'DELETE' });
+      if (res.ok) {
+        // const imgContainer = this.parentNode;
+        // imgContainer.remove();
+        button.parentElement.remove();
+      }
+    });
+  });
+
+
+
+</script>

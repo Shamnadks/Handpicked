@@ -1,0 +1,199 @@
+<section id="three">
+    <div class="container-fluid">
+      
+    <h3 class="barista">Barista Recommends</h3>
+    <h6 class="menu-3">View Menu</h6>
+    
+      <img  class="greenleaf" src="images/greyleafright.svg" alt="">
+    <div class="card-deck" id="sec-3">
+      <div class="card ">
+        <img class="card-img-top im3" src="images/javachip.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Javachip Frappuchino</h5>
+          <p class="card-text"><small class="text-muted">&#x20A8;.350</small></p>
+          <p class="card-text"><button type="button" class="custom-btn btn-green btn-sm-rounded add-butt">Add Item</button></p>
+
+        </div>
+      </div>
+      <div class="card ">
+        <img class="card-img-top im3" src="images/coldcoffe.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Cold Coffee</h5>
+          <p class="card-text"><small class="text-muted">&#x20A8;.350</small></p>
+          <p class="card-text"><button type="button" class="custom-btn btn-green btn-sm-rounded add-butt">Add Item</button></p>
+
+        </div>
+      </div>
+      <div class="card  ">
+        <img class="card-img-top im3" src="images/vanilla.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Vanilla Sweet Cream Cold Brew</h5>
+          <p class="card-text"><small class="text-muted rate-3">&#x20A8;.350</small></p>
+          <p class="card-text"><button type="button" class="custom-btn btn-green btn-sm-rounded add-butto">Add Item</button></p>
+
+        </div>
+       
+        </div>
+      </div>
+    </div>
+    </div>
+  
+  </div>
+  </section>
+
+
+ <section id="three">
+    <div class="container-fluid">
+      
+    <h3 class="barista">Barista Recommends</h3>
+    <h6 class="menu-3">View Menu</h6>
+    
+      <img  class="greenleaf" src="images/greyleafright.svg" alt="">
+    <div class="card-deck" id="sec-3">
+      <div class="card ">
+        <img class="card-img-top im3" src="images/javachip.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Javachip Frappuchino</h5>
+          <p class="card-text"><small class="text-muted">&#x20A8;.350</small></p>
+          <p class="card-text"><button type="button" class="custom-btn btn-green btn-sm-rounded add-butt">Add Item</button></p>
+
+        </div>
+      </div>
+      <div class="card ">
+        <img class="card-img-top im3" src="images/coldcoffe.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Cold Coffee</h5>
+          <p class="card-text"><small class="text-muted">&#x20A8;.350</small></p>
+          <p class="card-text"><button type="button" class="custom-btn btn-green btn-sm-rounded add-butt">Add Item</button></p>
+
+        </div>
+      </div>
+      <div class="card  ">
+        <img class="card-img-top im3" src="images/vanilla.jpg" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Vanilla Sweet Cream Cold Brew</h5>
+          <p class="card-text"><small class="text-muted rate-3">&#x20A8;.350</small></p>
+          <p class="card-text"><button type="button" class="custom-btn btn-green btn-sm-rounded add-butto">Add Item</button></p>
+
+        </div>
+       
+        </div>
+      </div>
+    </div>
+    </div>
+  
+  </div>
+  </section>
+
+#three{
+  background-color: #edebe9;
+}
+.row{
+  padding-bottom: 50px;
+}
+
+#sec-3{
+  height: 200px;
+
+}
+.barista{
+  font-weight: bold;
+  font-size: 25px;
+  padding-left: 105px;
+  position: relative;
+  top: 20px;
+}
+.menu-3{
+  color: #00754a;
+    font-size: .8rem;
+    cursor: pointer;
+    font-weight: 700;
+    position: relative;
+    left: 957px;
+}
+.greenleaf{
+  width: 65px;
+  height: 83px;
+  position: relative;
+  left: 1000px;
+  top: -76px;
+}
+.card-deck{
+  padding: 7% 10%;
+  position: relative;
+  top: -107px;
+
+}
+.card{
+  height: 150px;
+  width: 450px;
+  border-radius: 20px;
+}
+.card-title{
+  font-size: 15px;
+  font-weight: bold;
+}
+.add-butt{
+  position: relative;
+  bottom: 43px;
+  left: 119px;
+}
+.add-butto{
+  position: relative;
+  bottom: 55px;
+  left: 122px;
+}
+.im3{
+  width: 77px;
+  height: 59px;
+  border-radius: 21px;
+  position: relative;
+  left: 18px;
+  top: 10px;
+}
+.rate-3{
+  position: relative;
+  left: 2px;
+  top: -11px;
+}
+
+.btn-sm-rounded{
+  border-radius: 30px;
+  font-family: SoDoSans_Semibold,Helvetica,sans-serif;
+  box-shadow: 0 4px 15px #a3a3a3ad;
+}
+.btn-green {
+  color: #fff;
+  background-color: #00754a;
+}
+.custom-btn {
+  align-items: center;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color .167s cubic-bezier(.4,0,.2,1) 0s,box-shadow .167s cubic-bezier(.4,0,.2,1) 0s,color .167s cubic-bezier(.4,0,.2,1) 0s;
+  user-select: none;
+  vertical-align: middle;
+}
+
+element.style {
+}
+#sec-3 {
+}
+.card-deck {
+    padding: 7% 15%;
+}
+ @media (min-width: 576px) 
+ {
+    .card-deck {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}}

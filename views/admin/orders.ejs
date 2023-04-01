@@ -1,0 +1,90 @@
+<%- include('../layouts/admin/adminheader.ejs') -%>
+
+<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
+ 
+<script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/sp-2.1.2/datatables.min.js"></script>
+
+
+<div class="card">
+  <h5 class="card-header">ORDERS</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table" id="myTable" >
+      <thead>
+        <tr>
+          <th>Order id</th>
+          <th>Products</th>
+          <th>Date</th>
+          <th>Payment Method</th>
+          <th>Status</th>
+          <th>Order Price</th>
+          <th>Address</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        <tr>
+          <% order.forEach(function(order){ %> 
+
+            <td><%=order.orderId%></td>
+            <td><a href="/view_product?id=<%=order._id%>" class="btn btn-primary">View</a></td>
+            <td><%= order.date.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}) %></td>
+            <td>
+              <% if(order.payment_method === "1"){ %>
+                <p class="text-danger" >COD</p>
+                <%} %>
+                <% if(order.payment_method === "2"){ %>
+                  <p class="text-success" >RAZOR PAY</p>
+                  <%} %>
+            </td>
+            <td><%= order.status%></td>
+             <td><%= order.total ? order.total : order.subtotal %></td>
+             <td><%= order.addressId %></td>
+             <td>
+              <% if(order.status ==="processing"){ %>
+                <a href="/changeStatus?id=<%= order._id%>" class="btn btn-primary" onclick="return confirm('Are You Sure?')" >Ship Order</a>
+             <%  } %>
+
+             <% if(order.status ==="Shipped"){ %>
+              <a href="/changeStatus?id=<%= order._id%>" class="btn btn-warning" onclick="return confirm('Are You Sure?')" >Out for delivery</a>
+           <%  } %>
+
+           <% if(order.status ==="Out for Delivery"){ %>
+            <a href="/changeStatus?id=<%= order._id%>" class="btn btn-success" onclick="return confirm('Are You Sure?')" >Delivered</a>
+         <%  } %>
+          </td>
+          </tr>
+         <%  }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%- include('../layouts/admin/adminfooter.ejs') -%>
+
+      <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
+
+      <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/sp-2.1.2/datatables.min.js"></script>
+      <script>
+        $(document).ready( function () {
+          $('#myTable').DataTable();
+        } );
+        </script>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

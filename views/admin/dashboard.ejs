@@ -1,0 +1,461 @@
+<%- include('../layouts/admin/adminheader.ejs') -%>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.7.0/jspdf.plugin.autotable.min.js"></script>
+
+
+
+
+
+            <!-- Sales Chart Start -->
+             <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Worldwide Sales</h6>
+                               
+                            </div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Sales & Revenue</h6>
+                              
+                            </div>
+                            <canvas id="sales-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="container-fluid pt-4 px-4">
+              <div class="row g-4">
+                <div class="col-sm-12 col-xl-6">
+                  <div class="bg-light text-center rounded p-4">
+                      <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Donut Chart</h6>
+                      </div>
+                      <canvas id="ordersChart"></canvas>
+                </div>
+                </div>
+                <div class="col-sm-12 col-xl-6">
+                  <div class="bg-light text-center rounded p-4">
+                      <div class="d-flex align-items-center justify-content-between mb-4">
+                          <h6 class="mb-0">graph</h6>
+                        
+                      </div>
+                      <canvas id="revenueChart"></canvas>
+                  </div>
+              </div>
+                </div>
+                </div>
+                
+              
+
+            <!-- Sales Chart End -->
+
+
+            <!-- Recent Sales Start -->
+             <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Recent Sales</h6>
+                      
+                        <form>
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" id="startDate" name="startDate">
+                            &nbsp;  &nbsp;
+                            <label for="endDate">End Date:</label>
+                            <input type="date" id="endDate" name="endDate">
+                            &nbsp; &nbsp; &nbsp;
+                            <button  type="submit" class="btn btn-primary">Generate Report</button>
+                            &nbsp; &nbsp; &nbsp;
+                             <button id="downloadCsvBtn" class="btn btn-primary " >Download CSV</button>
+                             &nbsp; &nbsp; &nbsp;
+                            
+                          </form>
+                          <br>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="orderTable" class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Payment Method</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Subtotal</th>
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% order.forEach(o =>{ %>
+                               
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td><%= o.orderId %></td>
+                                    <td><%= new Date(o.date).toLocaleDateString() %></td>
+                                    <td><%= o.payment_method === "1" ? "COD" : "Online Payment" %></td>
+                                    <td><%= o.status %></td>
+                                    <td><%= o.subtotal %></td>
+                                  
+                                </tr>
+                                <% }) %>
+                              
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> 
+            <!-- Recent Sales End -->
+
+            <!-- Generate Report -->
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                       
+                    </div>
+                    <div class="table-responsive">
+                        <table id="productTable" class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Payment Method</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                            
+                                </tr>
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> 
+            <!-- Generate report End -->
+
+          
+
+
+           
+<%- include('../layouts/admin/adminfooter.ejs') -%>
+
+<script>
+    const salesChart = document.getElementById('sales-chart').getContext('2d');
+
+// Function to fetch the sales report data and generate the line graph
+async function generateSalesReport() {
+try {
+  // Fetch the sales report data
+  const response = await fetch('/salesGraph');
+  const data = await response.json();
+
+  // Create the line graph
+  const chart = new Chart(salesChart, {
+    type: 'line',
+    data: data.data,
+  });
+} catch (error) {
+  console.error(error);
+}
+}
+
+// Call the function to generate the line graph
+generateSalesReport();
+
+fetch('/salesGraph')
+.then(res => res.json())
+  .then(data => {
+    const chartData = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [
+        {
+          label: 'Delivered',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+          data: data.chart.delivered
+        },
+        {
+          label: 'Cancelled',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+          data: data.chart.cancelled
+        },
+        {
+          label: 'Returned',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+          data: data.chart.returned
+        }
+      ]
+    };
+
+    const config = {
+      type: 'bar',
+      data: chartData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
+    };
+
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+    const revenueData = data.revenue.map(item => ({ sum: item.total, month: item.month }));
+
+const chartData2 = {
+  labels: revenueData.map(item => item.month),
+  datasets: [{
+    label: "Revenue",
+    data: revenueData.map(item => item.sum),
+    borderColor: "#3e95cd",
+    fill: false
+  }]
+};
+
+const ctx = document.getElementById("revenueChart").getContext("2d");
+const revenueChart = new Chart(ctx, {
+  type: 'line',
+  data: chartData2,
+  options: {
+    scales: {
+      y: {
+        ticks: {
+          beginAtZero: true
+        }
+      }
+    }
+  }
+});
+})
+.catch(err => console.error(err))
+
+</script>
+
+<!--Sales chart-->
+<script>
+    fetch('/salesGraph?year=2023&month=3')
+    .then(response => response.json()) // parse the response as JSON
+    .then(dataa => {
+      // create a line chart using the data
+      const chartData = dataa.map(({ year, month, count }) => ({
+        x: new Date(year, month - 1),
+        y: count,
+      }));
+      const ctx = document.getElementById('SalesChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: 'Orders',
+              data: chartData,
+              borderColor: 'rgb(255, 99, 132)',
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'time',
+              time: {
+                unit: 'month',
+              },
+            },
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    })
+    .catch(error => console.error(error));
+
+  </script>
+  
+  
+  <!-- monthly and yearly sales report-->
+
+  <script>
+
+    fetch('/salesGraph')
+      .then(response => response.json())
+      .then(dataaa => {
+        const monthlyOrders = dataaa.monthlyOrders;
+        const yearlyOrders = dataaa.yearlyOrders;
+  
+        const monthlyData = {
+          label: 'Monthly Orders',
+          data: monthlyOrders.map(o => o.count),
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        };
+  
+        const yearlyData = {
+          label: 'Yearly Orders',
+          data: yearlyOrders.map(o => o.count),
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        };
+  
+        const ordersChart = new Chart('ordersChart', {
+          type: 'doughnut',
+          data: {
+            labels: monthlyOrders.map(o => o.month + '/' + o.year),
+            datasets: [monthlyData, yearlyData]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      })
+      .catch(err => console.error(err));
+  </script>
+  
+  
+  
+  
+  <!-- sales report-->
+  <link rel="stylesheet" href="your-stylesheet.css" media="print">
+
+<!-- Add a hidden div that will contain the printable content -->
+<div id="printable-content" style="display: none;"></div>
+  <script>
+    $('form').submit(async function (event) {
+      event.preventDefault();
+  
+      const startDate = $('#startDate').val();
+      const endDate = $('#endDate').val();
+  
+      try {
+        const response = await fetch(`/salesreport?startDate=${startDate}&endDate=${endDate}`);
+        const data = await response.json();
+  
+        // Clear the tables
+        $('#orderTable tbody').empty();
+        $('#productTable tbody').empty();
+  
+        // Populate the tables with data
+        data.orders.forEach(order => {
+          const { orderId, date, payment_method, status, subtotal } = order;
+  
+          $('#orderTable tbody').append(`
+           
+            <tr>
+              <td>${orderId}</td>
+              <td>${new Date(date).toLocaleDateString()}</td>
+              <td>${payment_method == "1" ? "COD" : "Online Payment"}</td>
+              <td>${status}</td>
+              <td>${subtotal}</td>
+            </tr>
+          `);
+  
+          const products = data.products.filter(product => product.orderId === orderId);
+          products.forEach(product => {
+            const { id, name, price, quantity } = product;
+  
+            $('#productTable tbody').append(`
+             
+              <tr>
+                <td>${orderId}</td>
+                <td>${new Date(date).toLocaleDateString()}</td>
+                <td>${name}</td>
+                <td>${price}</td>
+                <td>${quantity} </td>
+              </tr>
+            `);
+          });
+        });
+      } catch (error) {
+        console.error(error);
+        // handle error here
+      }
+    });
+    $('#downloadCsvBtn').click(function () {
+  const csvData = [];
+  
+  // Add headings for the order table
+  const orderTableHeadings = ['Order ID','Date', 'Payment Method', 'Status','Subtotal','','product','product price', 'quantity'];
+  csvData.push(orderTableHeadings.join(','));
+  
+  // Add order and product data to CSV
+  $('#orderTable tbody tr').each(function () {
+    const orderId = $(this).find('td:first-child').text(); // get the order ID from the first column
+    let orderData = null;
+  
+    $(this).find('td').each(function (index) {
+      if (index == 0) {
+        orderData = [$(this).text()];
+      } else {
+        orderData.push($(this).text());
+      }
+    });
+  
+    // Add product data to order data
+    const products = $('#productTable tbody tr').filter(function () {
+      return $(this).find('td:first-child').text() === orderId; // filter products by order ID
+    });
+  
+    products.each(function () {
+      const rowData = [...orderData]; // create a copy of order data
+      $(this).find('td:not(:first-child)').each(function () {
+        rowData.push($(this).text());
+      });
+      csvData.push(rowData.join(',')); // add order and product data to CSV
+    });
+  });
+  
+  // Generate CSV file
+  const csvBlob = new Blob([csvData.join('\n')], { type: 'text/csv' });
+  const csvUrl = URL.createObjectURL(csvBlob);
+  const csvLink = document.createElement('a');
+  csvLink.href = csvUrl;
+  csvLink.download = 'salesreport.csv';
+  csvLink.click();
+});
+
+$('#downloadPdfBtn').click(function () {
+  console.log('Generating PDF...');
+
+  // Clone the order and product tables and add them to the hidden div
+  const printableContent = $('#orderTable').clone();
+  printableContent.append($('#productTable').clone());
+
+  // Remove any unnecessary content (such as buttons)
+  printableContent.find('button').remove();
+
+  // Add the printable content to the page and open the print dialog
+  $('#printable-content').html(printableContent);
+  window.print();
+
+  console.log('PDF generation complete.');
+});
+
+
+</script>

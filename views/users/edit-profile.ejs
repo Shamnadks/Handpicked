@@ -1,0 +1,101 @@
+<%- include('../layouts/user/userheader.ejs') -%>
+
+
+
+<style>
+  .main {
+    max-width: 100%;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(19, 17, 17, 0.377);
+  }
+
+  .profile {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  .profile h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .profile p {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .profile ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .profile li {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .profile li strong {
+    display: inline-block;
+    width: 100px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .label {
+    font-weight: bold;
+  }
+
+  .data {
+    flex: 1;
+  }
+</style>
+<body class="goto-here">
+  <% if(typeof userData !== "undefined"){ %>
+    <%-include('login_nav') %>
+  <%}else{%>
+    <%- include('not_logged_nav') %>
+  <%}%>
+  <div class="container main">
+    <div class="profile w-50 h-50">
+      <h1 style="color: #82ae46;">EDIT PROFILE</h1>
+      <form action="/editUserProfile" method="POST">
+        <div class="form-group">
+          <label class="label" for="name">Name:</label>
+          <input class="form-control" type="text" name="name" value="<%= userData.name %>">
+        </div>
+        <div class="form-group">
+          <label class="label" for="email">Email:</label>
+          <input class="form-control" type="email" name="email" value="<%= userData.email %>">
+        </div>
+        <div class="form-group">
+          <label class="label" for="mobile">Mobile:</label>
+          <input class="form-control" type="tel" name="mobile" value="<%= userData.mobile %>">
+          <input class="form-control" type="hidden" name="user_id" value="<%= userData._id %>">
+        </div>
+        <button class="btn btn-outline-success w-50 " type="submit">Update</button>
+        &nbsp;&nbsp;
+        <a  href="/user-profile"> <button class="btn btn-primary">BACK</button></a>
+      </form>
+    </div>
+  </div>
+
+
+<%- include('../layouts/user/userfooter.ejs') -%>

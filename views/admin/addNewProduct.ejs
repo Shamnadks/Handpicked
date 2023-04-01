@@ -1,0 +1,83 @@
+
+<%- include('../layouts/admin/adminheader.ejs') %>
+
+<div class="col-sm-12 col-xl-6">
+  <div class="bg-light rounded h-100 p-4">
+    <form action="/addNewProduct" method="post" enctype="multipart/form-data">
+
+      <h6 class="mb-4">ADD NEW PRODUCT</h6>
+      <div class="form-floating mb-3">
+          <input name="name" type="text" class="form-control" id="floatingInput"
+              placeholder="name">
+          <label for="floatingInput">Product Name</label>
+      </div><br>
+      <div class="form-floating mb-3">
+          <input name="price" type="number" class="form-control" id="floatingPassword"
+              placeholder="Password">
+          <label for="floatingPassword">Price</label>
+      </div><br>
+      <div class="form-floating">
+        <textarea name="description" class="form-control" placeholder="Leave a comment here"
+            id="floatingTextarea" style="height: 150px;"></textarea>
+        <label for="floatingTextarea">Description</label>
+    </div><br>
+    <div class="form-floating mb-3">
+      <input name="stock" type="number" class="form-control" id="floatingPassword"
+          placeholder="Password">
+      <label for="floatingPassword">Stock</label>
+  </div><br>
+      <div class="form-floating mb-3">
+          <select name="category" class="form-select" id="floatingSelect"
+              aria-label="Floating label select example">
+              <option selected>Choose the category</option>
+              <%for(let i=0;i <category.length; i++){%>
+                <option value=<%=category[i]._id%>><%=category[i].category%></option>
+                <%}%>
+          </select>
+          </div>
+          <br>
+      <div class="mb-3">
+        <label for="formFileMultiple" class="form-label">select multiple files</label>
+        <input onchange="return validateImages();"  class="form-control" type="file" id="formFileMultiple" name="image" accept="image/*"   multiple>
+    </div><br>
+    
+    <% if(typeof message !== 'undefined'){  %>
+                            
+      <h5 class="text-danger text-center "><%= message %> </h5>
+  
+      <%
+  }
+  
+  %>
+    <button type="submit" class="btn btn-primary">ADD PRODUCT</button>
+     </form>
+  </div>
+</div>
+<%- include('../layouts/admin/adminfooter.ejs') %>
+
+<script>
+  function validateImages() {
+  const input = document.getElementById("formFileMultiple");
+  const files = input.files;
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    const fileSizeLimit = 5 * 1024 * 1024; // 5 MB
+
+    if (!allowedExtensions.exec(file.name)) {
+      alert("Invalid file type. Please select only images with JPG, JPEG, PNG, or GIF extensions.");
+      input.value = ""; // Clear the file input element
+      return false;
+    }
+
+    if (file.size > fileSizeLimit) {
+      alert("File size is too large. Please select images with a maximum size of 5 MB.");
+      input.value = ""; // Clear the file input element
+      return false;
+    }
+  }
+
+  return true;
+}
+</script> 

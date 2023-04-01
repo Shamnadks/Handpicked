@@ -1,0 +1,35 @@
+<%- include('../layouts/admin/adminheader.ejs') %>
+  <!-- Blank Start -->
+  <div class="container-fluid pt-4 px-4">
+    <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
+        <div class="col-md-6 text-center">
+
+
+          <form action="/addcategory" method="post">
+            <div class="mb-3">
+                <label  for="exampleInputEmail1" class="form-label">Add Category Name</label>
+                <input  name="category"  type="text" class="form-control" 
+                    aria-describedby="emailHelp">
+                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
+                </div> -->
+            </div>
+            
+            <button type="submit" class="btn btn-primary">ADD CATEGORY</button>
+        </form>
+        <% if(typeof message !== 'undefined'){%>
+                
+          <h5 class="text-danger text-center" id="message" ><%= message %> </h5>
+      
+          <%
+      }
+      
+      %>
+    </div>
+</div>
+
+       </div> 
+    </div>
+</div>
+<!-- Blank End -->
+
+<%- include('../layouts/admin/adminfooter.ejs') %>
