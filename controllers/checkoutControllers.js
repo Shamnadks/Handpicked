@@ -10,6 +10,8 @@ const moment = require('moment');
 
 
 
+
+
 const quantitys = [];
 const checkOut = async (req, res,next) => {
   try {
@@ -178,10 +180,73 @@ const coupon = async (req, res, next) => {
 
 
 
+const removeAddress = async (req, res,next) => {
+  try {
+    const id = req.body.addressId;
+    const userId = req.session.userData._id;
+
+    await User.updateOne(
+      {
+        _id: userId,
+        "address._id": id,
+      },
+      {
+        $pull: {
+          address: { _id: id },
+        },
+      }
+    );
+    res.json({
+      res: "success",
+    });
+  } catch (error) {
+   next(error)
+  }
+};
+
+const editAddressLoad = async(req,res,next)=>{
+  try{
+   const id = req.query.id;
+    const userData = req.session.userData;
+    const userAddress = await User.findOne({ address: { $elemMatch: { _id: id } } }, { "address.$": 1, _id: id });
+    res.render('users/edit-address2', { address: userAddress, userData: userData });
+  }
+  catch(error){
+    next(error)
+  }
+}
+
+const editAddressUpload = async(req,res,next)=>{
+  try{
+    const id = req.query.id;
+    console.log(id);
+    const userAddress = await User.updateOne(
+      { address: { $elemMatch: { _id: id } } }, { $set: { "address.$": req.body } });
+      console.log(userAddress);
+      console.log(req.body);
+    res.redirect('/cart');
+
+    // const id = req.query.id;
+    // const userAddress = await User.updateOne(
+    //   { Address: { $elemMatch: { _id: id } } },
+    //   { $set: { "Address.$": req.body } }
+    // );
+    // res.redirect("/checkout");
+
+  }
+  catch(error){
+    next(error)
+  }
+}
+
 module.exports={
+  
   checkOut,
   placeOrder,
   successorder,
-  coupon 
+  coupon,
+  removeAddress,
+  editAddressLoad,
+  editAddressUpload
 
 }

@@ -74,6 +74,9 @@ user_route.delete('/removeproduct/:id',auth.isLogin, cartController.removeCartPr
 
 
 user_route.post('/checkout', auth.isLogin, checkoutController.checkOut);
+user_route.get('/editCheckoutAddress',auth.isLogin,checkoutController.editAddressLoad);
+user_route.post('/editCheckoutAddress',auth.isLogin,checkoutController.editAddressUpload);
+user_route.post('/removeaddress-checkoutpage',auth.isLogin,checkoutController.removeAddress);
 user_route.post('/place-order',auth.isLogin, checkoutController.placeOrder);
 user_route.get('/success', auth.isLogin,checkoutController.successorder);
 user_route.post('/validateCoupon',auth.isLogin, checkoutController.coupon);

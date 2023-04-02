@@ -214,8 +214,8 @@ tfoot td {
                                                       <%= address[i].state %><br>
                                                       <%= address[i].pincode %><br>
                                                       
-                                                        <a href="/editAddress?id=<%=address._id%>"><span class="material-symbols-outlined">edit_note</span></a>
-                                                        <a  href="/deleteAddress?id=<%=address._id%>" onclick="return confirm('Are You Sure ?')"><span class="material-symbols-outlined"> delete </span></a>
+                                                        <a href="/editCheckoutAddress?id=<%=address[i]._id%>"><span class="material-symbols-outlined">edit_note</span></a>
+                                                        <a  onclick=" removeaddress('<%= address[i]._id %>')"><span class="material-symbols-outlined"> delete </span></a>
                                                       
                                                   </div>
                                                 </div>
@@ -631,6 +631,67 @@ tfoot td {
   // Update the display to show the coupon has been removed
   alert("Coupon removed successfully!");
       }
+
+
+
+      //remove address
+
+      const removeaddress = async (addressId) => {
+      // Show a confirmation dialog using SweetAlert2
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'This address will be removed from your checkout page!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        // If the user confirms the deletion
+        if (result.value) {
+          // Send a POST request to remove the product from the backend
+          fetch('/removeaddress-checkoutpage', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              addressId:addressId,
+            })
+          })
+          .then(response => response.json())
+          .then(result => {
+            console.log(result); // Log the response to the console
+            if (result.res == "success") {
+              // Show a success message using SweetAlert2
+              Swal.fire(
+                'Deleted!',
+                'This address has been removed from your checkout page.',
+                'success'
+              ).then(() => {
+                // Reload the page after the success message is shown
+                window.location.reload();
+              });
+            } else {
+              // If there is an error, show an error message using SweetAlert2
+              Swal.fire(
+                'Error',
+                'There was an error removing the address from your checkout page.',
+                'error'
+              );
+            }
+          })
+          .catch(error => {
+            console.log(error); // Log any errors to the console
+            // Show an error message using SweetAlert2
+            Swal.fire(
+              'Error',
+              'There was an error removing the address from your checkout page.',
+              'error'
+            );
+          });
+        }
+      })
+    }
     </script>
   </body>
 </html>
