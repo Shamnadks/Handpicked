@@ -162,7 +162,7 @@ tfoot td {
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
                                     <div class="create-ac-content bg-light-gray padding-20px-all">
                                       <h2 class="delivery-heading">Deliver to:</h2>
-                                      <div class="delivery-addresses">
+                                      <!-- <div class="delivery-addresses">
                                         <% if (address) { %>
                                         <select class="form-select form-select-lg mb-3" id="addressform">
                                           <% address.forEach(function(item) { %>
@@ -192,7 +192,57 @@ tfoot td {
                                         <div class="add-new-address">
                                           <a href="/addaddressCheckout?id=<%=userData%>" class="btn btn-outline-dark"><strong>Add new Address</strong></a>
                                         </div>
-                                      </div>
+                                      </div> -->
+                                      
+                                      <div class="create-ac-content bg-light-gray padding-20px-all">
+                                        <br><br>
+
+                                        <% if (address) { %>
+                                            <% for (i = 0; i < address.length; i++) { %>
+                                              <div class="col">
+                                                <div class="card shadow-sm">
+                                                  <div class="card-body" >
+                                                    <label class="radio-container">
+                                                      <input type="radio" class="radios" id="address_<%= i %>" name="address" value="<%= address[i].name %>,  <%=address[i].house %>, <%= address[i].city %>, <%= address[i].state %>, <%= address[i].pincode %>, <%= address[i].mobile %> " required>&nbsp;
+                                                      <span class="checkmark"></span>
+                                                    </label>
+                                                     <%= address[i].houseName %><br>
+                                                      <%= address[i].houseNumber%><br>
+                                                      <%= address[i].street %><br>
+                                                      <%= address[i].landmark %><br>
+                                                      <%= address[i].city %><br>
+                                                      <%= address[i].state %><br>
+                                                      <%= address[i].pincode %><br>
+                                                      
+                                                        <a href="/editAddress?id=<%=address._id%>"><span class="material-symbols-outlined">edit_note</span></a>
+                                                        <a  href="/deleteAddress?id=<%=address._id%>" onclick="return confirm('Are You Sure ?')"><span class="material-symbols-outlined"> delete </span></a>
+                                                      
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            <% } %>
+                                          <% } else { %>
+                                            <div>
+                                              <p>No Address Found. Please add Address.</p>
+                                            </div>
+                                          <% } %>
+                                            <br>
+                                            <div class="d-flex justify-content-left mb-2">
+                                                <a href="/addaddressCheckout?id=<%=userData%>"
+                                                    class="btn btn-outline-dark"><strong>Add new
+                                                        Address</strong></a>
+                                            </div>
+                                        </div>
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
                                       <div class="coupon-area">
                                         <div class="check_title"></div>
                                         <input type="text" name="coupon" id="couponcode" class="coupon-input" placeholder="Enter coupon code" />
@@ -253,7 +303,7 @@ tfoot td {
 																						<td>Total Amount</td>
 																						<td></td>
 																						<td id="gtotal" ><%= total %></td>
-																						<input type="hidden"  />
+																						<input type="hidden" id="ftotal" value="<%= total %>" />
 																					</tr>
 																				</tfoot>
 																			</table>
@@ -360,23 +410,32 @@ tfoot td {
       let subtotal;
 
       subtotal = Number(document.getElementById("subtotal").value);
-
-      async function enableButton() {
-        addressId = document.getElementById("addressform").value;
-        if (addressId)
-          document.getElementById("placeOrderButton").disabled = false;
-        else {
-          Swal.fire({
-            title: "Something went wrong",
-            text: "Add address first !",
-            icon: "error",
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "OK",
-            timer: 3000,
-          });
-        }
+     Rtotal = Number(document.getElementById('ftotal').value);
+      
+     
+     async function enableButton() {
+      var radioButtons = document.getElementsByName("address");
+      for (var i = 0; i < radioButtons.length; i++) {
+        radioButtons[i].addEventListener('click', function() {
+          var id = this.id;
+           addressId= document.getElementById(id).value;
+         
+        });
       }
+        if(addressId)
+         document.getElementById('placeOrderButton').disabled = false
+         else {Swal.fire({
+
+                    text: "Add address first !",
+                    icon: 'error',
+                    showConfirmButton: false, 
+                    iconHtml: '<i class="fas fa-map-marker-alt"></i>',
+                    timer: 1000
+                })  
+            }
+        }
+
+    
 
       // ------------------------------------------RAZORPAY------------------------------------------------------------------
 
@@ -473,8 +532,8 @@ tfoot td {
         const quantity = Object.values(
           document.getElementsByName("quantity")
         ).map((item) => item.value);
-        const addressId = document.getElementById("addressform").value;
-       // const subtotal = Number(document.getElementById("subtotal").value);
+        
+      
         const couponcode = document.getElementById("couponcode").value;
 
         let data = {

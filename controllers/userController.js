@@ -339,17 +339,18 @@ const editProfileUpdate = async (req, res,next) => {
 }
 const addAdressLoad = async (req, res,next) => {
   try {
+    console.log("is it ok?????");
     const id = req.query.id;
+    console.log(id);
     const userData = await User.findById({ _id: id });
+    console.log(userData);
     if (userData) {
       res.render('users/add-address', { userData: userData });
     }
     else {
       res.redirect('/home');
     }
-
-
-  }
+ }
   catch (error) {
     next(error);
   }

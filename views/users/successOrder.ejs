@@ -106,7 +106,7 @@
                               <th scope="col">Total</th>
                           </tr>
                       </thead>
-                      <tbody>
+                      <!-- <tbody>
 
                           <% order.forEach(function(orderItem) { %>
                           <% orderItem.product.forEach(function(productItem) { %>
@@ -149,12 +149,72 @@
                                   <h4>Total</h4>
                               </td>
                               <td>
-                                  <p><%= orderItem.subtotal %></p>
+                                  <p><%= orderItem.gtotal %></p>
                               </td>
                           </tr>
                           <%})%>
-                      </tbody>
-                  </table>
+                      </tbody> -->
+                 
+                 
+                  <tbody>
+
+                                <% order.forEach(function(orderItem) { %>
+                                    <% var totalPrice = 0 %>
+                                <% orderItem.product.forEach(function(productItem) { %>
+                                <tr>
+                                    <td>
+                                        <p><%= productItem.name %></p>
+                                    </td>
+                                    <td>
+                                        <h5><%= productItem.quantity %></h5>
+                                    </td>
+                                    <td>
+                                        <p><%= productItem.price * productItem.quantity %></p>
+                                    </td>
+                                </tr>
+                                <% totalPrice += productItem.price * productItem.quantity %>
+                              <% }) %>
+                              <tr>
+                                    <td>
+                                        <h4>Subtotal: </h4>
+                                    </td>
+                                    <td></td>
+                                    <td><strong><%= totalPrice %></strong></td>
+                                  </tr>
+                                <tr>
+                                    <td>
+                                        <h4>Discount total : </h4>
+                                    </td>
+                                    <td>
+                                        <h5></h5>
+                                    </td>
+                                    <td>
+                                        <p><%= orderItem.total ? orderItem.total : orderItem.subtotal %></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4>Shipping</h4>
+                                    </td>
+                                    <td>
+                                        <h5></h5>
+                                    </td>
+                                    <td>
+                                        <p>Free</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4>Total</h4>
+                                    </td>
+                                    <td>
+                                        <p><%= orderItem.total ? orderItem.total : orderItem.subtotal %></p>
+                                    </td>
+                                </tr>
+                                <%})%>
+                            </tbody>
+                 
+                    </table>
                          
   </div>
 </div>

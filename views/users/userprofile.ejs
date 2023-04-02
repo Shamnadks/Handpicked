@@ -135,7 +135,7 @@
             
     <a href="/editUserProfile?id=<%=userData._id %>" class="genric-btn w-100 primary btn btn-outline-success">Edit profile</a> <br><br>
     <a href="/myOrders" class="genric-btn w-100 primary btn btn-outline-success">My orders</a> <br><br>
-    <a href="/addaddress" class="genric-btn w-100 primary btn btn-outline-success">Manage Address</a> <br><br>
+    <a href="/addaddress?id=<%=userData._id%>" class="genric-btn w-100 primary btn btn-outline-success">Manage Address</a> <br><br>
     <a href="/forget" class="genric-btn  w-100 primary btn btn-outline-success">Reset Password</a> <br><br>
     <h5 class="text-success"><span class="text-danger" >wallet Amount:</span>₹ <%= userData.wallet %></h5>
 

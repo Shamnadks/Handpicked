@@ -10,7 +10,7 @@ const moment = require('moment');
 
 
 
-
+const quantitys = [];
 const checkOut = async (req, res,next) => {
   try {
     const address = await User.find({ _id: req.session.userData._id }).lean();
@@ -29,6 +29,7 @@ const checkOut = async (req, res,next) => {
     cartProducts.map((cartProduct, i) => {
       cartProduct.quantity = req.body.quantity[i];
       subtotal = subtotal + cartProduct.price * req.body.quantity[i];
+      quantitys[i] = req.body.quantity[i];
     });
     res.render("users/checkout", {
       productDetails: cartData[0].Cartproducts,
@@ -79,7 +80,7 @@ const placeOrder = async (req, res,next) => {
 
       couponCode = req.body.coupon;
       const applied = await Coupon.findOne({ code: req.body.coupon })
-      couponamount = applied.percentage
+      couponamount = applied.offer
       if (couponamount) {
         const amount = (subtotal * couponamount) / 100
         total = subtotal - amount
