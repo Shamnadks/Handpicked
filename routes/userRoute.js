@@ -25,7 +25,7 @@ user_route.get("/", function (req, res) {
   }
 });
 
-user_route.get('/home',auth.isLogin, userController.homeLoad);
+user_route.get('/home', userController.homeLoad);
 user_route.get('/login',auth.isLogout, userController.loginLoad);
 user_route.post('/login',auth.isLogout, userController.verifyLogin);
 
