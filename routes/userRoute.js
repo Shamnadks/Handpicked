@@ -65,7 +65,7 @@ user_route.get('/cancelOrder',auth.isLogin,orderController.cancelOrderLoad);
 
 user_route.get('/shop', productController.shopLoad);
 user_route.get('/productView', productController.productViewLoad);
-user_route.get('/categorySelection', productController.viewByCategoryLoad);
+ user_route.get('/categorySelection', productController.viewByCategoryLoad);
 
 
 user_route.get('/cart', auth.isLogin, cartController.cartLoad);
