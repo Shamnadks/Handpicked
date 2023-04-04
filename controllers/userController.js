@@ -73,7 +73,7 @@ const sendResetLink = async (name, email, token,next) => {
       from: process.env.EMIALUSER,
       to: email,
       subject: 'forget password link',
-      html: '<p>Hii ' + name + ', please click here to <a href="http://127.0.0.1:3000/forget-password?token=' + token + '">Reset your Password</a></p>'
+      html: '<p>Hii ' + name + ', please click here to <a href="https://handpickedfresh.store/forget-password?token=' + token + '">Reset your Password</a></p>'
     }
     transporter.sendMail(mailOptions, function (error, info,next) {
       if (error) {
