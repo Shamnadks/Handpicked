@@ -42,8 +42,8 @@ admin_route.get('/deleteCategory', adminAuth.isLogin, categoryController.deleteC
 
 //products
 admin_route.get('/productList', adminAuth.isLogin, productController.productLoad);
-admin_route.get('/addNewProduct', productController.addProductLoad);
-admin_route.post('/addNewProduct', Upload.array('image'), productController.productUpload);
+admin_route.get('/addNewProduct', adminAuth.isLogin, productController.addProductLoad);
+admin_route.post('/addNewProduct',adminAuth.isLogin, Upload.array('image'), productController.productUpload);
 admin_route.delete('/deleteImage/:imgName',adminAuth.isLogin, productController.removeImage);
 
 admin_route.post('/deleteProduct',adminAuth.isLogin, productController.deleteProduct);

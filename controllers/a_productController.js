@@ -35,10 +35,10 @@ const productLoad = async (req, res,next) => {
 
 const addProductLoad = async (req, res,next) => {
   try {
-    console.log("hiii itss okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+    
     const categoryData = await Category.find({});
-    console.log(categoryData,"kkkkkkkkkkkkkkkkkkkkkkkkk");
-    res.render('admin/addnewproduct', { category: categoryData });
+    
+    res.render('admin/addNewProduct', { category: categoryData });
 
   }
   catch (error) {
