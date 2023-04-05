@@ -1,16 +1,9 @@
-
-
 const User = require("../model/userSchema");
 const Product = require("../model/productSchema");
 const Order = require("../model/orderSchema");
 const Coupon = require("../model/couponSchema");
 const { ObjectId } = require('mongodb');
 const moment = require('moment');
-
-
-
-
-
 
 const quantitys = [];
 const checkOut = async (req, res,next) => {
@@ -47,7 +40,6 @@ const checkOut = async (req, res,next) => {
 }
 
 
-let couponCode
 let couponamount
 
 const placeOrder = async (req, res,next) => {
@@ -178,8 +170,6 @@ const coupon = async (req, res, next) => {
   }
 }
 
-
-
 const removeAddress = async (req, res,next) => {
   try {
     const id = req.body.addressId;
@@ -225,15 +215,7 @@ const editAddressUpload = async(req,res,next)=>{
       console.log(userAddress);
       console.log(req.body);
     res.redirect('/cart');
-
-    // const id = req.query.id;
-    // const userAddress = await User.updateOne(
-    //   { Address: { $elemMatch: { _id: id } } },
-    //   { $set: { "Address.$": req.body } }
-    // );
-    // res.redirect("/checkout");
-
-  }
+}
   catch(error){
     next(error)
   }

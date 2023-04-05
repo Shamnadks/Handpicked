@@ -1,8 +1,6 @@
-
 require('dotenv').config();
 const Product = require("../model/productSchema");
 const Category = require("../model/categorySchema");
-
 
 const shopLoad = async (req, res, next) => {
   try {
@@ -48,7 +46,6 @@ const shopLoad = async (req, res, next) => {
   }
 };
 
-
 const productViewLoad = async (req, res, next) => {
   try {
     const id = req.query.id;
@@ -60,8 +57,6 @@ const productViewLoad = async (req, res, next) => {
     next(error);
   }
 }
-
-
 
 const viewByCategoryLoad = async (req, res, next) => {
   try {

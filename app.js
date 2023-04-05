@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -6,7 +5,6 @@ const cookieParser = require("cookie-parser")
 const path = require("path");
 const logger = require("morgan");
 const session = require("express-session")
-const bodyParser = require('body-parser')
 mongoose.set("strictQuery", true);
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
@@ -32,8 +30,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-
 
 app.use(function (req, res, next) {
   res.header('Cache-control', 'no-cache, no-store');
