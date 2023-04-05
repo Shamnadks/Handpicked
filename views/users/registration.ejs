@@ -158,7 +158,7 @@ const form1 = document.querySelector("#form1");
 
   const nameFunction = () => {
     if (!namePattern.test(name.value)) {
-      nameError.textContent = "Invalid name";
+      nameError.textContent = "Invalid name-Name should start with an uppercase & No spaces allowed .";
       return false;
     } else {
       nameError.textContent = "";
@@ -176,7 +176,7 @@ const form1 = document.querySelector("#form1");
   };
   const phoneNumberFunction = () => {
     if (!phoneNumberPattern.test(phoneNumber.value)) {
-      phoneNumberError.textContent = "Invalid phone number";
+      phoneNumberError.textContent = "Invalid phone number- Number should be 10 digits";
       return false;
     } else {
       phoneNumberError.textContent = "";
@@ -185,7 +185,7 @@ const form1 = document.querySelector("#form1");
   };
   const passwordFunction = () => {
     if (!passwordPattern.test(password.value)) {
-      passwordError.textContent = "Not a strong password";
+      passwordError.textContent = "Password should contain 1 uppercase,1 lowercase,1 special character, 1 digit and min 8 characters. ";
       return false;
     } else {
       passwordError.textContent = "";
@@ -220,7 +220,7 @@ const form1 = document.querySelector("#form1");
     }
     if (!isFormValid) {
       event.preventDefault();
-      alert("Form is not valid!");
+      alert("Please fill all data accordingly!!");
     } else {
       form.submit();
     }

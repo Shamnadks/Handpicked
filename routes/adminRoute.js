@@ -12,12 +12,6 @@ const Upload = require('../helper/multer');
 const session = require('express-session');
 admin_route.use(session({ secret: config.sessionSecret, resave: true, saveUninitialized: true }));
 
-// const bodyParser = require('body-parser');
-// admin_route.use(bodyParser.json());
-// admin_route.use(bodyParser.urlencoded({ extended: true }));
-
-
-
 const adminAuth = require('../middleware/adminAuth');
 
 //dashboard
