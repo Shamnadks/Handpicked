@@ -458,4 +458,9 @@ $('#downloadPdfBtn').click(function () {
 });
 
 
+//jquery for start and end date
+$("#startDate").on("change", function(){
+  $("#endDate").attr("min", $(this).val());
+});
+
 </script>
