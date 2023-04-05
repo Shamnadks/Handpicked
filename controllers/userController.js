@@ -55,7 +55,6 @@ const sendVerifyMail = async (email,next) => {
   }
 }
 
-//for forget password reset link
 
 const sendResetLink = async (name, email, token,next) => {
   try {
@@ -201,7 +200,7 @@ const verifyLogin = async (req, res,next) => {
 
     if (user) {
 
-      //decrypting the password 
+      
 
       const passwordMatch = await bcrypt.compare(password, user.password);
 
@@ -236,7 +235,7 @@ const verifyLogin = async (req, res,next) => {
 }
 
 
-//forget password
+
 
 const forgetLoad = async (req, res,next) => {
   try {
