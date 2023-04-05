@@ -40,7 +40,7 @@
     </div>
 	
 
-		<section class="h-100 h-custom" style="background-color: #ffffff;">
+		<section class="h-100 h-custom d-flex flex-column align-items-center" style="background-color: #ffffff;">
 			<div class="container py-5 h-100">
 				<div class="row d-flex justify-content-center align-items-center h-100">
 					<div class="col-12">
@@ -70,12 +70,12 @@
 		
 													<div class="col-md-3 col-lg-3 col-xl-2 d-flex">
 														<!-- Minus button  -->
-														<a class="btn btn-rect " style="color: white; text-size-adjust: 20px;"
+														<a class="btn btn-rect d-flex align-items-center justify-content-center " style="color: white; text-size-adjust: 20px;"
 															onclick="this.parentNode.querySelector('input[type=number]').stepDown();validateData('<%= product._id %>')">
 															-</a>
 		
 														<div class="form-outline">
-															<input style="width: 5rem;  text-align: center;" class="form-control" type="number" id="<%= product._id %>" min="1"
+															<input style="width: 4rem;  text-align: center;" class="form-control d-flex align-items-center justify-content-center type="number" id="<%= product._id %>" min="1"
 																name="quantity" pattern="<%= product._id %>" max="<%= product.stock %>" value="1"
 																onchange="validateData('<%=product._id %>')" readonly  />
 															<span id="price_text_<%= product._id %>" hidden=""><%= product.price %> </span>
@@ -83,7 +83,7 @@
 														</div>
 														
 														 <!-- plus button  -->
-														<a class="btn btn-rect" style="color: white;"
+														<a class="btn btn-rect d-flex align-items-center justify-content-center" style="color: white;"
 															onclick="this.parentNode.querySelector('input[type=number]').stepUp();validateData('<%= product._id %>')">
 															+</a>
 														<div class="form-outline">
@@ -120,7 +120,7 @@
 				</div>
 			</div>
 
-<table class="table">
+<table class="table w-75">
   <thead>
     <tr>
       <th>Items</th>
@@ -147,7 +147,7 @@
           </button>
         <% } else { %>
           
-            <button type="submit" class="btn btn-primary  btn-block">
+            <button type="submit" class="btn btn-primary w-75  btn-block">
               Checkout
             </button>
           </form>
