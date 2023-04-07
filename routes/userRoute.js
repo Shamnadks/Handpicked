@@ -58,6 +58,7 @@ user_route.get('/categorySelection', productController.viewByCategoryLoad);
 
 user_route.get('/cart', auth.isLogin, cartController.cartLoad);
 user_route.post('/addToCart', auth.isLogin, cartController.addToCart);
+user_route.post('/cart/update/:productId',auth.userLogin,userController.updateCartQuantity);
 user_route.delete('/removeproduct/:id',auth.isLogin, cartController.removeCartProduct);
 
 user_route.get('/checkout', auth.isLogin, checkoutController.checkOut);
