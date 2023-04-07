@@ -71,20 +71,21 @@
 													<div class="col-md-3 col-lg-3 col-xl-2 d-flex">
 														<!-- Minus button  -->
 														<a class="btn btn-rect d-flex align-items-center justify-content-center " style="color: white; text-size-adjust: 20px;"
-															onclick="this.parentNode.querySelector('input[type=number]').stepDown();validateData('<%= product._id %>')">
+													    onclick="this.parentNode.querySelector('input[type=number]').stepDown();validateData('<%= product._id %>');updateCartQuantity('<%= product._id %>', this.parentNode.querySelector('input[type=number]').value);">
 															-</a>
 		
 														<div class="form-outline">
+														 <% const cartItem = user.cart.find(item => item.productId === product._id); %>
 															<input style="width: 4rem;  text-align: center;" class="form-control d-flex align-items-center justify-content-center type="number" id="<%= product._id %>" min="1"
-																name="quantity" pattern="<%= product._id %>" max="<%= product.stock %>" value="1"
-																onchange="validateData('<%=product._id %>')" readonly  />
+																name="quantity" pattern="<%= product._id %>" max="<%= product.stock %>" value="<%= cartItem ? cartItem.quantity : product.quantity %>"
+																onchange="updateCartQuantity('<%= product._id %>', this.value);validateData('<%= product._id %>')" readonly  />
 															<span id="price_text_<%= product._id %>" hidden=""><%= product.price %> </span>
 
 														</div>
 														
 														 <!-- plus button  -->
 														<a class="btn btn-rect d-flex align-items-center justify-content-center" style="color: white;"
-															onclick="this.parentNode.querySelector('input[type=number]').stepUp();validateData('<%= product._id %>')">
+															onclick="this.parentNode.querySelector('input[type=number]').stepUp();validateData('<%= product._id %>');updateCartQuantity('<%= product._id %>', this.parentNode.querySelector('input[type=number]').value);">
 															+</a>
 														<div class="form-outline">
 															<div class="fs-lg text-accent pt-2 price">
@@ -212,6 +213,32 @@
 		});
 
 	}
+	
+	          function updateCartQuantity(productId, quantity) {
+  fetch(`/cart/update/${productId}`, {
+    method: 'POST',
+    body: JSON.stringify({ quantity }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to update cart quantity');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Update the UI to reflect the new cart data
+    // For example, update the quantity displayed next to the product
+    const quantityInput = document.querySelector(`input[name=quantity][pattern=${productId}]`);
+    quantityInput.value = data.quantity;
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+
 
 
 </script>
