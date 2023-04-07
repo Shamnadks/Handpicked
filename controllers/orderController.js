@@ -2,8 +2,6 @@ const User = require("../model/userSchema");
 const Product = require("../model/productSchema");
 const Order = require("../model/orderSchema");
 
-
-
 const userOrdersLoad = async (req, res,next) => {
   try {
     const orderData = await Order.find({ userId: req.session.userData._id }).sort({ _id: -1 })

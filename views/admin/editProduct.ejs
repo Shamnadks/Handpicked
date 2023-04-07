@@ -53,7 +53,7 @@
         <% } %>
         <% } %>
         <label for="formFileMultiple" class="form-label">select multiple files</label>
-        <input onchange="return validateImages();" class="form-control" type="file" id="formFileMultiple" name="image"  multiple>
+        <input onchange="return validateImages();" class="form-control" type="file" id="formFileMultiple" name="image"  accept="image/*" multiple>
     </div></div><br>
     
     <% if(typeof message !== 'undefined'){  %>

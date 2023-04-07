@@ -7,7 +7,6 @@ const isLogin = (req, res, next) => {
   }
 };
 
-
 const isLogout = (req, res, next) => {
   if (req.session.user) {
     req.session.user = false;

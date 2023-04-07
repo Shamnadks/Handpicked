@@ -9,8 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
 
 
-
-
 <body class="goto-here">
   <% if(typeof userData !== "undefined"){ %>
     <%-include('login_nav') %>
@@ -172,10 +170,7 @@ var main_prodcut_image = document.getElementById('main_product_image');
 main_prodcut_image.src = element.src;
 
 }
-
-
-		
-		jQuery(document).ready(function ($) {
+jQuery(document).ready(function ($) {
 
 $('.zoom-image img').click(function (event) {
 	var ix = $(this).offset().left;

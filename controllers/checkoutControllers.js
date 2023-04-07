@@ -1,16 +1,9 @@
-
-
 const User = require("../model/userSchema");
 const Product = require("../model/productSchema");
 const Order = require("../model/orderSchema");
 const Coupon = require("../model/couponSchema");
 const { ObjectId } = require('mongodb');
 const moment = require('moment');
-
-
-
-
-
 
 const quantitys = [];
 const checkOut = async (req, res,next) => {
@@ -47,7 +40,6 @@ const checkOut = async (req, res,next) => {
 }
 
 
-let couponCode
 let couponamount
 
 const placeOrder = async (req, res,next) => {
@@ -178,8 +170,6 @@ const coupon = async (req, res, next) => {
   }
 }
 
-
-
 const removeAddress = async (req, res,next) => {
   try {
     const id = req.body.addressId;
@@ -219,35 +209,26 @@ const editAddressLoad = async(req,res,next)=>{
 const editAddressUpload = async(req,res,next)=>{
   try{
     const id = req.query.id;
-    console.log(id);
+    
     const userAddress = await User.updateOne(
       { address: { $elemMatch: { _id: id } } }, { $set: { "address.$": req.body } });
-      console.log(userAddress);
-      console.log(req.body);
+     
     res.redirect('/cart');
-
-    // const id = req.query.id;
-    // const userAddress = await User.updateOne(
-    //   { Address: { $elemMatch: { _id: id } } },
-    //   { $set: { "Address.$": req.body } }
-    // );
-    // res.redirect("/checkout");
-
-  }
+}
   catch(error){
     next(error)
   }
 }
 
 const razorPayFunction = async(req, res) => {
-  console.log("Create OrderId Request", req.body)
+  
 let  options = {
     amount: req.body.amount,  // amount in the smallest currency unit
     currency: "INR",
     receipt: "rcp1"
   };
   instance.orders.create(options, function (err, order) {
-    console.log(order);
+    
     res.send({ orderId: order.id });//EXTRACT5NG ORDER ID AND SENDING IT TO CHECKOUT
   });
 }
@@ -260,8 +241,6 @@ const razorPayVerify = async (req, res) => {
   let expectedSignature = crypto.createHmac('sha256', process.env.KEY_SECRET)
     .update(body.toString())
     .digest('hex');
-  console.log("sig received ", req.body.response.razorpay_signature);
-  console.log("sig generated ", expectedSignature);
   let response = { "signatureIsValid": "false" }
   if (expectedSignature === req.body.response.razorpay_signature)
     response = { "signatureIsValid": "true" }

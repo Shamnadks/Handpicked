@@ -40,11 +40,20 @@
 
   .form-group {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   .label {
     font-weight: bold;
+    flex: 1;
+  padding-right: 10px;
+  text-align: right;
   }
+  .form-group .input-group {
+  flex: 2;
+}
 
   .form-control {
     display: block;
@@ -101,45 +110,46 @@
   
   <section class="tyu">
   
-  <div class="container main"  style="width: 800px" >
-    <div class="profile"  style="width: 800px">
-      <h1 style="color: #82ae46;">EDIT ADDRESS</h1>
-      <form action="/editCheckoutAddress?id=<%=address._id %>" method="POST">
-        <div class="form-group">
-          <label class="label" for="houseName">House Name:</label>
-          <input class="form-control" type="text" name="houseName" required value="<%= address.address[0].houseName %>">
-        </div>
-        <div class="form-group">
-          <label class="label" for="houseNumber">House Number:</label>
-          <input class="form-control" type="text" name="houseNumber" required value="<%= address.address[0].houseNumber %>">
-        </div>
-        <div class="form-group">
-          <label class="label" for="street">Street:</label>
-          <input class="form-control" type="text" name="street" required value="<%=address.address[0].street %>">
-           <input class="form-control" type="hidden" name="user_id" value="<%= address._id %>"> 
-        </div>
-        <!-- <div class="form-group">
-          <label class="label" for="landmark">Landmark:</label>
-          <input class="form-control" type="text" name="landmark" required >
-        </div> -->
-        <div class="form-group">
-          <label class="label" for="city">City:</label>
-          <input class="form-control" type="text" name="city" required value="<%=address.address[0].city %>">
-        </div>
-        <!-- <div class="form-group">
-          <label class="label" for="state">State:</label>
-          <input class="form-control" type="text" name="state" required>
-        </div> -->
-        <div class="form-group">
-          <label class="label" for="pincode">Pin Code:</label>
-          <input class="form-control" type="text" name="pincode"  required value="<%= address.address[0].pincode %>">
-        </div>
-        <button class="btn btn-primary" type="submit">UPDATE ADDRESS</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        
-      </form>
+    <div class="container main" style="width: 800px">
+      <div class="profile" style="width: 800px">
+        <h1 style="color: #82ae46;">EDIT ADDRESS</h1>
+        <form action="/editCheckoutAddress?id=<%=address._id %>" method="POST">
+          <div class="form-group">
+            <label class="label" for="houseName">House Name/Number:</label>
+            <div class="input-group">
+              <input class="form-control" type="text" name="houseName" required value="<%= address.address[0].houseName %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="street">Street:</label>
+            <div class="input-group">
+              <input class="form-control" type="text" name="street" required value="<%=address.address[0].street %>">
+              <input class="form-control" type="hidden" name="user_id" value="<%= address._id %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="landmark">Landmark:</label>
+            <div class="input-group">
+              <input class="form-control" type="text" name="landmark">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="city">City:</label>
+            <div class="input-group">
+              <input class="form-control" type="text" name="city" required value="<%=address.address[0].city %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="pincode">Pin Code:</label>
+            <div class="input-group">
+              <input class="form-control" type="text" name="pincode" required value="<%= address.address[0].pincode %>">
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">UPDATE ADDRESS</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </form>
+      </div>
     </div>
-  </div>
+    
 </section>
 
 

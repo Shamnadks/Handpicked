@@ -176,7 +176,7 @@ const verifyOtp = async (req, res) => {
     const userData = user.save();
     
     if (userData) {
-      res.render('users/registration', { message: "Your registration has been successful,Please continue to Login." })
+      res.render('users/login', { message: "Your registration has been successful,Please continue to Login." })
     }
     else {
       res.render('users/registration', { message: "Your registration has been failed" })
@@ -338,12 +338,9 @@ const editProfileUpdate = async (req, res,next) => {
 }
 const addAdressLoad = async (req, res,next) => {
   try {
-    console.log("is it ok?????");
-    const id = req.query.id;
-    console.log(id);
+     const id = req.query.id;
     const userData = await User.findById({ _id: id });
-    console.log(userData);
-    if (userData) {
+     if (userData) {
       res.render('users/add-address', { userData: userData });
     }
     else {
@@ -354,8 +351,6 @@ const addAdressLoad = async (req, res,next) => {
     next(error);
   }
 }
-
-
 
 const addadressUpload = async (req, res,next) => {
   try {
