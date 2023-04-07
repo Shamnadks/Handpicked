@@ -49,7 +49,7 @@ const userSchema= new mongoose.Schema({
         cart : [{
             productId : {
                 type : ObjectId
-            },
+            },quantity: { type: Number, default: 1 },
             _id : false
         }],
         wishlist : [{
